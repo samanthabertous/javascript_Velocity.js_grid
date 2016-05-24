@@ -1,0 +1,77 @@
+<html>
+	<head>
+		
+		<style type="text/css" media="screen">
+		
+			* {
+				box-sizing: border-box;			
+			}
+		
+			.square-container {
+				width: 800px;
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			
+			.square {
+				width: 40px;
+				height: 40px;
+				position: absolute;
+				
+				opacity: 0.5;
+				background: red;
+				border: 1px solid black;
+				
+				transition: all 1s linear;
+			}
+			
+		</style>		
+	</head>
+	<body>
+		<div class="square-container"></div>
+	
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript">
+			
+			var topPx = 0;
+			var left = 0;	
+
+			for (var i = 0; i < 400; i++) {
+				
+				$(document.createElement("div"))
+					.css({
+						"top": topPx,
+						"left": left
+					})
+					.addClass("square")
+					.appendTo(".square-container");
+					
+				left = left + 40;
+				
+				// If we're at the end of the row, start a new row
+				if (left > 800) {
+					topPx = topPx + 40;
+					left = 0;
+				}
+				
+			}
+
+
+			setInterval(function(){
+				$(".square").each(function(index, square){
+					
+					// var rgbColor = "rgb(" + red + ", " + green + ", " + blue + ")";
+					var randomChange = Math.floor(Math.random()*30);
+					
+					$(square).css({
+						"left": "+=" + randomChange,
+
+					});
+				})
+			}, 1000);
+
+		</script>
+	</body>
+
+</html>
