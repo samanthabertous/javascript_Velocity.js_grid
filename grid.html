@@ -7,23 +7,25 @@
 				box-sizing: border-box;			
 			}
 		
+			body{
+				display: flex;
+				justify-content: center;
+				align-items: center; 
+			}
+
 			.square-container {
 				width: 800px;
+				height: 800px;
 				position: relative;
-				margin-left: auto;
-				margin-right: auto;
 			}
 			
 			.square {
 				width: 40px;
 				height: 40px;
 				position: absolute;
-				
-				opacity: 0.5;
-				background: red;
 				border: 1px solid black;
 				
-				transition: all 1s linear;
+				transition: all 3s, background-color 7s, linear;
 			}
 			
 		</style>		
@@ -34,6 +36,7 @@
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script type="text/javascript">
 			
+			//create squares
 			var topPx = 0;
 			var left = 0;	
 
@@ -50,7 +53,7 @@
 				left = left + 40;
 				
 				// If we're at the end of the row, start a new row
-				if (left > 800) {
+				if (left > 760) {
 					topPx = topPx + 40;
 					left = 0;
 				}
@@ -58,18 +61,55 @@
 			}
 
 
+
+
 			setInterval(function(){
 				$(".square").each(function(index, square){
-					
-					// var rgbColor = "rgb(" + red + ", " + green + ", " + blue + ")";
-					var randomChange = Math.floor(Math.random()*30);
+
+					//allow square to become different colors
+					var red = Math.floor(Math.random()*255); 
+					var green = Math.floor(Math.random()*30); 
+					var blue = Math.floor(Math.random()*105);
+					var rgbColor = "rgb(" + red + ", " + green + ", " + blue + ")";
+
+					//squares bounce around in a confine area
+					var topNumber = Math.floor(Math.random()*900); 
+					var bottomNumber = Math.floor(Math.random()*990); 
+					var leftNumber = Math.floor(Math.random()*890); 
+					var rightNumber = Math.floor(Math.random()*990);
+
 					
 					$(square).css({
-						"left": "+=" + randomChange,
+
+						"background-color": rgbColor,
+						"top": topNumber,
+						"left": leftNumber,
+						"right": rightNumber,
+						"bottom": bottomNumber
 
 					});
 				})
-			}, 1000);
+
+
+			$(".square:nth-child(odd)").each(function(index, square){
+
+				var randomChange = Math.floor(Math.random()*30);
+
+				//turns squares into circles
+				$(square).css({
+					"border-radius": randomChange + 'px',
+					"width":   randomChange*2 + 'px',
+					"height":  randomChange*2 + 'px'
+				}).hover(function(){
+						$(this).css({
+							width: randomChange + "3" + "px",
+							height: randomChange + "3" + "px",
+							transform: 'rotate(36deg)',
+						});
+				});
+			})
+
+			}, 2000);
 
 		</script>
 	</body>
